@@ -1,0 +1,1 @@
+KISSY.add("test/addition/addition",["button"],function(t,n,d,i){n("button");d.run=function(t,n){return t+n}});

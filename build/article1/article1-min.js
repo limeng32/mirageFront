@@ -1,0 +1,1 @@
+KISSY.add("test/article1/article1",[],function(t,i,n,c){c.exports={init:function(){t.log("article1 init")}}});

@@ -1,0 +1,1 @@
+KISSY.add("test/header/header",["node"],function(e,d,t,a){var i=d("node").all;a.exports={init:function(){e.log("header init"),i("header").html("this is header")}}});
