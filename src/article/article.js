@@ -1,16 +1,68 @@
 var $ = require('node').all;
+var Node = require('node');
+var Menu = require('menu');
+var IO = require('io');
 var tpl = require('./article-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var addition = require('../addition/addition');
 var JSONX = require('../myUtil/jsonx');
 module.exports = {
     init: function () {
-        var data = '{"maxPageNum":1, "pageItems":[{"bookWriter":[{"book":{"$ref":"$.pageItems[0]"},"writer":{"association":{"id":2,"name":"推理协会","writer":[{"$ref":"$.pageItems[0].bookWriter[0].writer"}]},"bookWriter":[{"$ref":"$.pageItems[0].bookWriter[0]"}],"id":1,"level":{"id":2,"name":"级别二","writer":[{"$ref":"$.pageItems[0].bookWriter[0].writer"},{"association":{"id":1,"name":"新作协7","writer":[{"$ref":"$.pageItems[0].bookWriter[0].writer.level.writer[1]"}]},"bookWriter":[{"book":{"$ref":"$.pageItems[0]"},"writer":{"$ref":"$.pageItems[0].bookWriter[0].writer.level.writer[1]"}}],"id":2,"level":{"$ref":"$.pageItems[0].bookWriter[0].writer.level"},"name":"李四"}]},"name":"王"}},{"$ref":"$.pageItems[0].bookWriter[0].writer.level.writer[1].bookWriter[0]"}],"id":1,"origin":"一","title":"1的故事"}],"pageNo":1}';
-        data = JSONX.decode(data);
         var html = new XTemplate(tpl).render({
-            title: 'this is article' + addition.run(5, 3),
-            content: 'render by kg/xtemplate ' + data.pageItems[0].bookWriter[0].book.title
+            title: 'this is article' + addition.run(8, 3),
+            content: 'render by kg/xtemplate '
         });
         $('article').html(html);
+        var BG = new Node('<div>').addClass('middleBanner');
+        BG.append(new Node('<div>').addClass('navigatorSpan').prop(
+            {
+                id: 'navigatorContainer'
+            }));
+        $('article').append(BG);
+        var menuInit = function () {
+            var menu = new Menu({
+
+                    render: '#navigatorContainer',
+                    width: 200
+                }),
+                sb = new Menu.SubMenu({
+
+                    content: '我的淘宝',
+                    menu: new Menu.PopupMenu({
+                        autoHideOnMouseLeave: true,
+
+                        elStyle: {
+                            'color': 'red'
+                        },
+                        children: [
+                            new Menu.Item({
+
+                                content: '已买到的宝贝'
+                            }),
+                            new Menu.Item({
+
+                                content: '已卖出的宝贝'
+                            })
+                        ]
+                    })
+                });
+
+            menu.addChild(sb);
+            menu.addChild(new Menu.Item({
+
+                content: '首页'
+            }));
+            menu.addChild(new Menu.Item({
+
+                content: '购物车'
+            }));
+            menu.render();
+
+            menu.on("click", function (ev) {
+                console.log("你选中了" + ev.target.get("content"));
+                menu.set("highlightedItem", null);
+            });
+        };
+        menuInit();
     }
 };

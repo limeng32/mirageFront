@@ -3,3 +3,11 @@ article {
   color: #fff;
   padding: 20px;
 }
+.ks-popupmenu {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+.navigatorSpan {
+  width: 240px;
+}
