@@ -1,10 +1,10 @@
 var $ = require('node').all;
 var Node = require('node');
-var Menu = require('menu');
 var IO = require('io');
 var tpl = require('./article-view');
 var XTemplate = require("kg/xtemplate/3.3.3/runtime");
 var addition = require('../addition/addition');
+var Menu = require('menu');
 var JSONX = require('../myUtil/jsonx');
 module.exports = {
     init: function () {
@@ -55,6 +55,10 @@ module.exports = {
             menu.addChild(new Menu.Item({
 
                 content: '购物车'
+            }));
+            menu.addChild(new Menu.Item({
+
+                content: '退出'
             }));
             menu.render();
 
